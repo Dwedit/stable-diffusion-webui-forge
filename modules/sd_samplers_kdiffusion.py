@@ -9,7 +9,6 @@ from modules.shared import opts
 import modules.shared as shared
 from modules_forge.forge_sampler import sampling_prepare, sampling_cleanup
 
-
 samplers_k_diffusion = [
     ('DPM++ 2M Karras', 'sample_dpmpp_2m', ['k_dpmpp_2m_ka'], {'scheduler': 'karras'}),
     ('DPM++ SDE Karras', 'sample_dpmpp_sde', ['k_dpmpp_sde_ka'], {'scheduler': 'karras', "second_order": True, "brownian_noise": True}),
@@ -17,8 +16,6 @@ samplers_k_diffusion = [
     ('DPM++ 2M SDE Karras', 'sample_dpmpp_2m_sde', ['k_dpmpp_2m_sde_ka'], {'scheduler': 'karras', "brownian_noise": True}),
     ('Euler a', 'sample_euler_ancestral', ['k_euler_a', 'k_euler_ancestral'], {"uses_ensd": True}),
     ('Euler', 'sample_euler', ['k_euler'], {}),
-    ('Euler Dy', 'sample_euler_dy', ['k_euler_dy'], {}),
-    ('Euler Smea Dy', 'sample_euler_smea_dy', ['k_euler_smea_dy'], {}),
     ('LMS', 'sample_lms', ['k_lms'], {}),
     ('Heun', 'sample_heun', ['k_heun'], {"second_order": True}),
     ('DPM2', 'sample_dpm_2', ['k_dpm_2'], {'discard_next_to_last_sigma': True, "second_order": True}),
@@ -40,6 +37,8 @@ samplers_k_diffusion = [
     ('DPM2 a Karras', 'sample_dpm_2_ancestral', ['k_dpm_2_a_ka'], {'scheduler': 'karras', 'discard_next_to_last_sigma': True, "uses_ensd": True, "second_order": True}),
     ('DPM++ 2S a Karras', 'sample_dpmpp_2s_ancestral', ['k_dpmpp_2s_a_ka'], {'scheduler': 'karras', "uses_ensd": True, "second_order": True}),
     ('Restart', sd_samplers_extra.restart_sampler, ['restart'], {'scheduler': 'karras', "second_order": True}),
+    ('Euler Dy', sd_samplers_extra.sample_euler_dy, ['k_euler_dy'], {}),
+    ('Euler Smea Dy', sd_samplers_extra.sample_euler_smea_dy, ['k_euler_smea_dy'], {}),
 ]
 
 
@@ -257,5 +256,3 @@ class KDiffusionSampler(sd_samplers_common.Sampler):
         sampling_cleanup(unet_patcher)
 
         return samples
-
-
